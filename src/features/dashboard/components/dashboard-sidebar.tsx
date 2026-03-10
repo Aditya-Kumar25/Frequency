@@ -1,7 +1,7 @@
-"use-client"
+"use client"
 
 import { usePathname } from "next/navigation"  
-import Image from "next/navigation"
+import Image from "next/image"
 // import {LucideIcon} from "lucide-react"
 
 import{
@@ -86,5 +86,66 @@ function NavSection({label,items,pathname}:NavSectionProps){
                 </SidebarMenu>        
             </SidebarGroupContent>
         </SidebarGroup>
+    )
+}
+
+export function DashboardSidebar(){
+    const pathname = usePathname();
+    const clerk = useClerk();
+
+    const mainMenuItems :MenuItem[]=[
+        {
+            title:"Dashboard",
+            url:"/",
+            icon:Home,
+        },
+        {
+            title: "Explore voices",
+            url:"/voices",
+            icon:LayoutGrid,
+        },
+        {
+            title: "Text to speech",
+            url:"/text-to-speech",
+            icon:AudioLines,
+        },
+        {
+            title:"Voice cloning",
+            icon:Volume2,
+        }
+    ]
+    const otherMenuItems : MenuItem[] = [
+        {
+            title:"Settings",
+            icon:Settings,
+            onclick:()=> clerk.openOrganizationProfile()
+        },
+         {
+            title:"Help and Support",
+            url:"mailto:business@ashu.com",
+            icon:Headphones
+        },
+    ]
+
+    return (
+        <Sidebar collapsible="icon">
+            <SidebarHeader className="flex flex-col gap-4 pt-4">
+                <div className="flex items-center gap-2 pl-1 group-data-[collapsible=icon]:justify-center
+                group-data-[collapsible=icon]:pl-0">
+                    <Image
+                        src="/logo.svg"
+                        alt="Frequency"
+                        width = {24}
+                        height = {24}
+                        className = "rounded-sm"
+                    />
+                    <span className="group-data-[collapsible=icon]:hidden
+                    font-semibold text-lg tracking-tighter text-foreground">
+                        Frequency
+                    </span>
+                    <SidebarTrigger className="ml-auto lg:hidden" />
+                </div>
+            </SidebarHeader>
+        </Sidebar>
     )
 }
